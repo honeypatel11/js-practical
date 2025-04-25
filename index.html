@@ -1,58 +1,88 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="./assets/css/bootstrap.css">
-    <link rel="stylesheet" href="./assets/css/style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Recipe Form</title>
+  <link rel="stylesheet" href="./assets/css/bootstrap.css" />
+  <link rel="stylesheet" href="./assets/css/style.css" />
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
 </head>
-
 <body class="bg">
-   <section class="">
+  <section>
     <div class="container my-4 box align-items-center p-4">
-        <h1 class="fw-bold text-center">Recipe Book :- </h1>
-        <div class="row">
-            <div class="col-6">
-                <div class="my-4">
-                    <label for="title" class="text-dark fw-bold fs-5">Title :</label>
-                    <input type="text" class="form-control" name="title" id="title">
-                </div>
-
-                <div class="my-4">
-                    <label for="ingredients" class="text-dark fw-bold fs-5">Ingredients:</label>
-                    <input type="text" class="form-control" name="ingredients" id="ingredients">
-                </div>
-                <div class="my-4">
-                    <label for=" instructions" class="text-dark fw-bold fs-5">Instructions :</label>
-                    <input type="text" class="form-control" name="instructions" id="instructions">
-                </div>
-                <div class="my-4">
-                    <label for="" class="text-dark fw-bold fs-5">Chinese cuisine :-</label>
-                    <select name="" id="recipetype" class="form-select">
-                        <option value="">--select type--</option>
-                        <option value="1">French cuisine</option>
-                        <option value="2">Mexican cuisine</option>
-                        <option value="3">Chinese cuisine</option>    
-                    </select>     
-                </div>
-              <div class="my-4">
-                <button class="btn btn-primary" id="button">Submit</button>
-                <button class="btn btn-primary" onclick="window.location = './home.html'">Show Data</button>
-              </div>
-            </div>
+      <h1 class="fw-bold text-center">Recipe Book :- </h1>
+      <div class="row">
+        <div class="col-6">
+          <div class="my-4">
+            <label for="title" class="text-dark fw-bold fs-5">Title :</label>
+            <input type="text" class="form-control" name="title" id="title" />
+          </div>
+          <div class="my-4">
+            <label for="ingredients" class="text-dark fw-bold fs-5">Ingredients:</label>
+            <input type="text" class="form-control" name="ingredients" id="ingredients" />
+          </div>
+          <div class="my-4">
+            <label for="instructions" class="text-dark fw-bold fs-5">Instructions :</label>
+            <input type="text" class="form-control" name="instructions" id="instructions" />
+          </div>
+          <div class="my-4">
+            <label class="text-dark fw-bold fs-5">Cuisine :</label>
+            <select id="recipetype" class="form-select">
+              <option value="">--select type--</option>
+              <option value="French cuisine">French cuisine</option>
+              <option value="Mexican cuisine">Mexican cuisine</option>
+              <option value="Chinese cuisine">Chinese cuisine</option>
+            </select>
+          </div>
+          <div class="my-4">
+            <button class="btn btn-primary" id="button">Submit</button>
+            <button class="btn btn-primary" onclick="window.location = './home.html'">Show Data</button>
+          </div>
         </div>
-   </section>
+      </div>
     </div>
+  </section>
 
-    <script>
-        window.location = "./home.html"
-    </script>
+  <script>
+    let arr = JSON.parse(localStorage.getItem("recipe")) || [];
+    let editinfo = JSON.parse(localStorage.getItem("editinfo"));
+    let editidx = JSON.parse(localStorage.getItem("editidx"));
 
+    document.addEventListener("DOMContentLoaded", () => {
+      if (editidx !== null && editinfo) {
+        document.getElementById("title").value = editinfo.title;
+        document.getElementById("ingredients").value = editinfo.ingredients;
+        document.getElementById("instructions").value = editinfo.instructions;
+        document.getElementById("recipetype").value = editinfo.cuisine;
+      }
+    });
 
-    <script src="./assets/js/index.js"></script>
+    document.getElementById("button").addEventListener("click", function () {
+      let title = document.getElementById("title").value;
+      let ingredients = document.getElementById("ingredients").value;
+      let instructions = document.getElementById("instructions").value;
+      let cuisine = document.getElementById("recipetype").value;
 
+      let obj = {
+        title,
+        ingredients,
+        instructions,
+        cuisine
+      };
+
+      if (editidx !== null) {
+        arr[editidx] = obj;
+        localStorage.removeItem("editidx");
+        localStorage.removeItem("editinfo");
+      } else {
+        arr.push(obj);
+      }
+
+      localStorage.setItem("recipe", JSON.stringify(arr));
+      window.location = "home.html";
+    });
+  </script>
 </body>
-
 </html>

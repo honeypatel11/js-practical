@@ -1,29 +1,77 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="./assets/css/bootstrap.css">
-    <link rel="stylesheet" href="./assets/css/style.css">
-    <link rel="stylesheet" href="./index.html">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Recipe Data</title>
+  <link rel="stylesheet" href="./assets/css/bootstrap.css" />
+  <link rel="stylesheet" href="./assets/css/style.css" />
+  
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </head>
 <body>
-    <div class="container">
-        <table class="table table-dark my-4">
-            <thead class="text-center fs-5">
-              <tr>
-                <th>Title </th>
-                <th>Ingredients</th>
-                <th>Instructions</th>
-                <th>Cuisine</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody class="text-center fs-5" id="data">   
-            </tbody>
-          </table>
-    </div>
-    
+  <h1 class="text-center" id="empty"></h1>
+  <div class="container">
+    <table class="table table-dark my-4">
+      <thead class="text-center fs-5">
+        <tr>
+          <th>Title</th>
+          <th>Ingredients</th>
+          <th>Instructions</th>
+          <th>Cuisine</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody class="text-center fs-5" id="data"></tbody>
+    </table>
+  </div>
+
+  <script>
+    let arr = JSON.parse(localStorage.getItem("recipe")) || [];
+
+    function display() {
+      const dataContainer = document.getElementById("data");
+      dataContainer.innerHTML = "";
+
+     arr.forEach((item, idx) => {
+  dataContainer.innerHTML += `
+    <tr>
+      <td>${item.title}</td>
+      <td>${item.ingredients}</td>
+      <td>${item.instructions}</td>
+      <td>${item.cuisine}</td>
+      <td>
+        <button class="btn btn-warning me-2" onclick="edit(${idx})">
+          <i class="fas fa-edit text-white"></i>
+        </button>
+        <button class="btn btn-danger" onclick="deleteItem(${idx})">
+          <i class="fas fa-trash-alt"></i>
+        </button>
+      </td>
+    </tr>
+  `;
+});
+    }
+
+    function deleteItem(index) {
+      arr.splice(index, 1);
+      localStorage.setItem("recipe", JSON.stringify(arr));
+      display();
+    }
+
+    function edit(index) {
+      const obj = arr[index];
+      localStorage.setItem("editinfo", JSON.stringify(obj));
+      localStorage.setItem("editidx", index);
+      window.location = "index.html";
+    }
+
+    if (arr.length === 0) {
+      document.getElementById("empty").innerText = "No data found";
+    } else {
+      display();
+    }
+  </script>
 </body>
 </html>
