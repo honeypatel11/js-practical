@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./assets/css/bootstrap.css">
+    <link rel="stylesheet" href="./assets/css/style.css">
+</head>
+
+<body class="bg">
+   <section class="">
+    <div class="container my-4 box align-items-center p-4">
+        <h1 class="fw-bold text-center">Recipe Book :- </h1>
+        <div class="row">
+            <div class="col-6">
+                <div class="my-4">
+                    <label for="title" class="text-dark fw-bold fs-5">Title :</label>
+                    <input type="text" class="form-control" name="title" id="title">
+                </div>
+
+                <div class="my-4">
+                    <label for="ingredients" class="text-dark fw-bold fs-5">Ingredients:</label>
+                    <input type="text" class="form-control" name="ingredients" id="ingredients">
+                </div>
+                <div class="my-4">
+                    <label for=" instructions" class="text-dark fw-bold fs-5">Instructions :</label>
+                    <input type="text" class="form-control" name="instructions" id="instructions">
+                </div>
+                <div class="my-4">
+                    <label for="" class="text-dark fw-bold fs-5">Chinese cuisine :-</label>
+                    <select name="" id="recipetype" class="form-select">
+                        <option value="">--select type--</option>
+                        <option value="1">French cuisine</option>
+                        <option value="2">Mexican cuisine</option>
+                        <option value="3">Chinese cuisine</option>    
+                    </select>     
+                </div>
+              <div class="my-4">
+                <button class="btn btn-primary" id="button">Submit</button>
+                <button class="btn btn-primary" onclick="window.location = './home.html'">Show Data</button>
+              </div>
+            </div>
+        </div>
+   </section>
+    </div>
+
+    <script>
+        window.location = "./home.html"
+    </script>
+
+
+    <script src="./assets/js/index.js"></script>
+
+</body>
+
+</html>
